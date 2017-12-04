@@ -151,7 +151,7 @@ void delay_us(uint32_t us)
   }
 }
 
-// Syncs all internal position vectors to the current system position.
+// Syncs all internal position vectors to the current system position.将所有内部位置向量同步到当前系统位置。
 void sys_sync_current_position()
 {
   plan_set_current_position(sys.position[X_AXIS],sys.position[Y_AXIS],sys.position[Z_AXIS]);
