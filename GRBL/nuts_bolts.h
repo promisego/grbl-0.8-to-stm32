@@ -69,6 +69,15 @@
 // NOTE: The system executor uses an unsigned 8-bit volatile variable (8 flag limit.) The default
 // flags are always false, so the runtime protocol only needs to check for a non-zero value to 
 // know when there is a runtime command to execute.
+/*定义系统执行位图。由运行时协议在内部使用，作为运行时命令标志，
+
+/ /它通知主程序异步执行指定的运行时命令。
+
+/ /注意:系统执行器使用未签署的8位可变变量(8个标记限制)。默认的
+
+/ /标记总是错误的，所以运行时协议只需要检查非零值
+
+/ /知道何时执行运行时命令。*/
 #define EXEC_STATUS_REPORT  bit(0) // bitmask 00000001
 #define EXEC_CYCLE_START    bit(1) // bitmask 00000010
 #define EXEC_CYCLE_STOP     bit(2) // bitmask 00000100

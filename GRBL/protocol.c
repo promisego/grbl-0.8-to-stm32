@@ -167,27 +167,39 @@ void EXTI2_IRQHandler(void)			  	//OTHER_CYCLE_START_PIN
 void protocol_execute_runtime()
 {
   uint8_t rt_exec;
-  if (sys.execute) { // Enter only if any bit flag is true
-    rt_exec = sys.execute; // Avoid calling volatile multiple times
+  if (sys.execute) { // Enter only if any bit flag is true输入仅当任何位标志为真
+    rt_exec = sys.execute; // Avoid calling volatile multiple times避免多次调用volatile
     
     // System alarm. Everything has shutdown by something that has gone severely wrong. Report
     // the source of the error to the user. If critical, Grbl disables by entering an infinite
     // loop until system reset/abort.
+		/*系统报警。一切都因严重错误而关闭。报告
+
+/ /用户错误的来源。如果重要，Grbl就会进入无限大
+
+/ /循环直到系统重置/中止。*/
     if (rt_exec & (EXEC_ALARM | EXEC_CRIT_EVENT)) {      
-      sys.state = STATE_ALARM; // Set system alarm state
+      sys.state = STATE_ALARM; // Set system alarm state设置系统报警状态
 
       // Critical event. Only hard limit qualifies. Update this as new critical events surface.
+			//关键事件。只有硬限制限定。将此更新为新的关键事件表面。
       if (rt_exec & EXEC_CRIT_EVENT) {
         report_alarm_message(ALARM_HARD_LIMIT); 
         report_feedback_message(MESSAGE_CRITICAL_EVENT);
-        bit_false(sys.execute,EXEC_RESET); // Disable any existing reset
+        bit_false(sys.execute,EXEC_RESET); // Disable any existing reset禁用任何现有的重置
         do { 
           // Nothing. Block EVERYTHING until user issues reset or power cycles. Hard limits
           // typically occur while unattended or not paying attention. Gives the user time
           // to do what is needed before resetting, like killing the incoming stream.
+					/*什么都没有。在用户问题复位或电源周期之前屏蔽所有东西。硬限制
+
+					通常在无人照看或不注意的情况下发生。为用户提供时间
+
+					在重新设置之前完成需要做的事情，比如杀死传入的流。*/
         } while (bit_isfalse(sys.execute,EXEC_RESET));
 
-      // Standard alarm event. Only abort during motion qualifies.
+					// Standard alarm event. Only abort during motion qualifies.
+					//标准的报警事件。只有在运动合格时中止。
       } else {
         // Runtime abort command issued during a cycle, feed hold, or homing cycle. Message the
         // user that position may have been lost and set alarm state to enable the alarm lockout
@@ -197,7 +209,7 @@ void protocol_execute_runtime()
       bit_false(sys.execute,(EXEC_ALARM | EXEC_CRIT_EVENT));
     } 
   
-    // Execute system abort. 
+    // Execute system abort. 系统中止执行。
     if (rt_exec & EXEC_RESET) {
       sys.abort = true;  // Only place this is set true.
       return; // Nothing else to do but exit.
@@ -360,7 +372,9 @@ uint8_t protocol_execute_line(char *line)
 
 
 // Process and report status one line of incoming serial data. Performs an initial filtering
+//进程和报告状态的一行输入串行数据。执行一个初始过滤
 // by removing spaces and comments and capitalizing all letters.
+//通过删除空格和注释，并将所有字母大写。
 void protocol_process()
 {
   uint8_t c;

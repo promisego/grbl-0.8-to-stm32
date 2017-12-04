@@ -48,6 +48,9 @@ volatile uint8_t tx_buffer_tail = 0;
   
   // Returns the number of bytes in the RX buffer. This replaces a typical byte counter to prevent
   // the interrupt and main programs from writing to the counter at the same time.
+	/*返回RX缓冲区中的字节数。这将替换典型的字节计数器来防止
+中断和主程序同时写入到计数器。*/
+
 static uint8_t get_rx_buffer_count()
   {
     if (rx_buffer_head == rx_buffer_tail) { return(0); }
@@ -88,12 +91,14 @@ void serial_write(uint8_t data) {
   uint8_t next_head = tx_buffer_head + 1;
   if (next_head == TX_BUFFER_SIZE) { next_head = 0; }
 
+	/******************************************可以会陷入无限循环************************************/
   // Wait until there is space in the buffer等到缓冲区中有空格
   while (next_head == tx_buffer_tail) { 
     if (sys.execute & EXEC_RESET) { return; } // Only check for abort to avoid an endless loop.
+																						  //只检查中止以避免无休止的循环。
   }
 
-  // Store data and advance head
+  // Store data and advance head存储数据和将head值前进
   tx_buffer[tx_buffer_head] = data;
   tx_buffer_head = next_head;
  //========================================== 
@@ -107,7 +112,7 @@ void serial_write(uint8_t data) {
 
 uint8_t serial_read()
 {
-  uint8_t tail = rx_buffer_tail; // Temporary rx_buffer_tail (to optimize for volatile)
+  uint8_t tail = rx_buffer_tail; // Temporary(暂时） rx_buffer_tail (to optimize for volatile为挥发性优化)
   uint8_t data ;
   if (rx_buffer_head == tail) {
     return SERIAL_NO_DATA;
