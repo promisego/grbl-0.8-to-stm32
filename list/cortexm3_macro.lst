@@ -430,10 +430,11 @@ ARM Macro Assembler    Page 7
   301 0000007A         
   302 0000007A                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
-ork --depend=.\output\cortexm3_macro.d -o.\output\cortexm3_macro.o -IC:\Keil_v5
-\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\Inc\ST\STM32F10x 
---predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 516" --list=.\l
-ist\cortexm3_macro.lst start\cortexm3_macro.s
+ork --depend=.\output\cortexm3_macro.d -o.\output\cortexm3_macro.o -IC:\Users\p
+c\Documents\git\grbl-0.8-to-stm32\RTE -ID:\Keil\Pack\Keil\STM32F1xx_DFP\1.1.0\D
+evice\Include -ID:\Keil\ARM\CMSIS\Include --predefine="__UVISION_VERSION SETA 5
+14" --predefine="STM32F10X_MD SETA 1" --list=.\list\cortexm3_macro.lst start\co
+rtexm3_macro.s
 
 
 

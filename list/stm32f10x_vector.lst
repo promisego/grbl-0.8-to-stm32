@@ -338,10 +338,11 @@ ARM Macro Assembler    Page 6
               00000400 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
-ork --depend=.\output\stm32f10x_vector.d -o.\output\stm32f10x_vector.o -IC:\Kei
-l_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\Inc\ST\STM32F
-10x --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 516" --list
-=.\list\stm32f10x_vector.lst start\stm32f10x_vector.s
+ork --depend=.\output\stm32f10x_vector.d -o.\output\stm32f10x_vector.o -IC:\Use
+rs\pc\Documents\git\grbl-0.8-to-stm32\RTE -ID:\Keil\Pack\Keil\STM32F1xx_DFP\1.1
+.0\Device\Include -ID:\Keil\ARM\CMSIS\Include --predefine="__UVISION_VERSION SE
+TA 514" --predefine="STM32F10X_MD SETA 1" --list=.\list\stm32f10x_vector.lst st
+art\stm32f10x_vector.s
 
 
 

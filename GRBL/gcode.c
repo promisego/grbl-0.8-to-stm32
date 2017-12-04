@@ -91,13 +91,6 @@ static float to_millimeters(float value)
 // characters and signed floating point values (no whitespace). Comments and block delete
 // characters have been removed. All units and positions are converted and exported to grbl's
 // internal functions in terms of (mm, mm/min) and absolute machine coordinates, respectively.
-/*执行一行0终止的g代码。假定该行仅包含大写
-
-字符和有符号浮点值(没有空格)。评论和块删除
-
-角色已被移除。所有单位和职位都转换并出口到grbl
-
-内部功能分别是(mm,mm / min)和绝对机器坐标。*/
 uint8_t gc_execute_line(char *line) 
 {
 
@@ -109,16 +102,12 @@ uint8_t gc_execute_line(char *line)
   int int_value;
   
   uint16_t modal_group_words = 0;  // Bitflag variable to track and check modal group words in block
-	                                 //位标记变量跟踪和检查模态组词块
   uint8_t axis_words = 0;          // Bitflag to track which XYZ(ABC) parameters exist in block
-	                                 //位标志跟踪哪个XYZ(ABC)参数存在于块中
 
   float inverse_feed_rate = -1; // negative inverse_feed_rate means no inverse_feed_rate specified
-	                                 //当为负数时表示没有指定
   uint8_t absolute_override = false; // true(1) = absolute motion for this block only {G53}
-	                                   //这个block的bsolute动议只有{G53}
   uint8_t non_modal_action = NON_MODAL_NONE; // Tracks the actions of modal group 0 (non-modal)
-                                             //跟踪模态组0(非模态)的动作
+  
   float target[3], offset[3];
   
   uint8_t group_number; 
@@ -133,19 +122,16 @@ uint8_t gc_execute_line(char *line)
 //====================== 
 
  
-    // If in alarm state, don't process. Immediately return with error.如果处于报警状态，则不要处理。立即返回错误
+    // If in alarm state, don't process. Immediately return with error.
   // NOTE: Might not be right place for this, but also prevents $N storing during alarm.
-	//注意:可能不适合这个位置，但也可以防止在警报期间存储$ N
   if (sys.state == STATE_ALARM) { return(STATUS_ALARM_LOCK); } 
-  clear_vector(target); // XYZ(ABC) axes parameters.轴参数
+  clear_vector(target); // XYZ(ABC) axes parameters.
   clear_vector(offset); // IJK Arc offsets are incremental. Value of zero indicates no change.
-	                      //IJK弧偏移量是增量的。零值表示没有变化。
     
   gc.status_code = STATUS_OK;
   
-  /* Pass 1: Commands and set all modes. Check for modal group violations.命令和设置所有模式。检查模式组的违规行为。
-     NOTE: Modal group numbers are defined in Table 4 of NIST RS274-NGC v3, pg.20 
-			模态组数在NIST rs274 - ngc v3的表4中定义*/
+  /* Pass 1: Commands and set all modes. Check for modal group violations.
+     NOTE: Modal group numbers are defined in Table 4 of NIST RS274-NGC v3, pg.20 */
   group_number = MODAL_GROUP_NONE;
   while(next_statement(&letter, &value, line, &char_counter)) {
     int_value = (int)(value);
